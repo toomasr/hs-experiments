@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>HelpScout Analysis</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+
+      /* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+
+
+      /* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+      #wrap > .container {
+        padding-top: 60px;
+      }
+
+      .container {
+        width: auto;
+        max-width: 900px;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }
+
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css"></style>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/humanize.js"></script>
+    <script type="text/javascript" src="js/hs-analyse.js"></script>
+
+    <script type="text/javascript">
+        $(window).load(function(){
+          $body = $("body");
+
+          $(document).on({
+            ajaxStart: function() { $body.addClass("loading"); },
+            ajaxStop: function() { $body.removeClass("loading"); }
+          });
+
+          if (getCookie("apiKey")) {
+            $("#hsApiKey").val(getCookie("apiKey"));
+            $("#rememberMeCheckbox").prop("checked", true);
+          }
+        });
+
+        function getCookie(key) {
+               cookiearray = document.cookie.split(';');
+               for(var i=0; i<cookiearray.length; i++){
+                  name = cookiearray[i].split('=')[0];
+                  value = cookiearray[i].split('=')[1];
+                  if (name.trim() == key)
+                    return value;
+               }
+               return null;
+            }
+    </script>
+
+  </head>
+
+<body>
+
+<a href="https://github.com/toomasr/hs-experiments"><img style="position: absolute; top: 0; right: 0; border: 0;z-index:1050;width: 149px; height: 149px;" src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-green@2x.png" alt="Fork me on GitHub" data-canonical-src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-green@2x.png"></a>
+<!-- Part 1: Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Fixed navbar -->
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">HelpScout Conversation Insight</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Begin page content -->
+      <div class="container">
+        <div class="page-header">
+          <div id="setup" style="width:225px">
+            <h2>Setup</h2>
+            <label for="hsApiKey"><strong>HelpScout API Key</strong></label>
+            <input type="text" id="hsApiKey" class="form-control" placeholder="HS API Key" autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onClick="rememberMe($('#rememberMeCheckbox').prop('checked'), $('#hsApiKey').val()); buildMailboxes($('#hsApiKey').val());">Fetch Mailboxes</button>
+            <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me" id="rememberMeCheckbox"> Remember API Key (cookie)
+          </label>
+        </div>
+          </div>
+        </div>
+        
+        <div id="mailboxesDiv" style="visibility:hidden;display:none;">
+          <h2>All Mailboxes</h2>
+          <table id="mailboxes">
+          </table>
+        </div>
+        <div id="casesDiv" style="visibility:hidden;display:none;">
+          <h2>Cases for Current Month</h2>
+          <table id="cases">
+          </table>
+        </div>
+      </div>
+
+      <div id="push"></div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">From developer for developers <a href="http://twitter.com/toomasr">Toomas Römer</a>. Get source code from <a href="https://github.com/toomasr/hs-experiments">Github repository</a>.</p>
+      </div>
+    </div>
+
+
+    <div class="modal" id="loadingDiv"><!-- Place at bottom of page --></div>
+  </body>
+</html>
